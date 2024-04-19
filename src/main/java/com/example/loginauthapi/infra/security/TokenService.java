@@ -35,6 +35,12 @@ public class TokenService {
 
     public String validateToken(String token) {
         try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("login-auth-api")
+                    .build()
+                    .verify(token)
+                    .getSubject();
 
         } catch (JWTVerificationException exception) {
             return null;
